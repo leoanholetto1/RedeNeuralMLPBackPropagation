@@ -12,6 +12,9 @@ def calcula(net,funcao):
     print(funcao)
     return net/10
 
+def calculaDerivada(net,funcao):
+    return 1/10.0
+
 def rede_neural(treinamento, erro, iter, N, camada, funcao, entrada, saida):
     print(treinamento)
     camada = int(camada)
@@ -42,21 +45,48 @@ def rede_neural(treinamento, erro, iter, N, camada, funcao, entrada, saida):
     print(entrada_valor)
     print(saida_valor)
     while iter > 0 and erroRede > erro:
+        erroLinha= []
         for linha in range(len(entrada_valor)):
             funca_neuro = []
+            nets_entrada = []
+            nets_saida = []
+            saida_neuro = []
+            erro = []
+            erro_camadaOculta = []
             for i in range(camada):
                 net = 0.0
                 for j in range(entrada):
-                    net+=camada_entrada[i][j]*linha[j]
+                    net+=camada_entrada[i][j]*entrada_valor[linha][j]
+                nets_entrada.add(net)
                 funca_neuro.add(calcula(net,funcao))
-            saida_neuro = []
             for i in range(saida):
                 net = 0.0
                 for j in range(camada):
                     net+=camada_saida[i][j]*funca_neuro[j]
+                nets_saida.add(net)
                 saida_neuro.add(calcula(net,funcao))
-            #calcula erro e volta
-        break
+            for i in range(saida):
+                erro.add((saida_valor[linha][i]-saida_neuro[i])*calculaDerivada(nets_saida[i],funcao))
+            media = 0.0
+            for i in range(saida):
+                media+=erro[i]*erro[i]
+            erroLinha.add(media/2.0)
+            for i in range(camada):
+                sumErros = 0.0
+                for j in range(saida):
+                    sumErros+=camada_saida[j][i]*erro[j]
+                erro_camadaOculta.add(sumErros*calculaDerivada(nets_entrada[i],funcao))
+            for i in range(saida):
+                for j in range(camada):
+                    camada_saida[i][j] = camada_saida[i][j] + erro[i]*N*nets_entrada[j]
+            for i in range(entrada):
+                for j in range(camada):
+                    camada_entrada[j][i] = camada_entrada[j][i] + erro_camadaOculta[j]*N*entrada_valor[linha][i]
+        iter-=1
+        sum = 0.0
+        for i in range(len(erroLinha)):
+            sum+=erroLinha[i]
+        erroRede = sum/len(erroLinha)
 
     return []
 
