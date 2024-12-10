@@ -32,9 +32,9 @@ def transformar_texto_em_classes(csv_file, coluna_texto, output_file=None):
     return df
 
 # Exemplo de uso
-csv_file = "base_treinamento.csv"  # Substitua pelo caminho do seu arquivo CSV
+csv_file = "heart_expandido.csv"  # Substitua pelo caminho do seu arquivo CSV
 coluna_texto = "classe"  # Nome da coluna com texto a ser transformado
-output_file = "base_treinamento_processados.csv"  # Nome do arquivo de saída
+output_file = "heart_expandido_processado.csv"  # Nome do arquivo de saída
 
 # Transformar o CSV
 df_processado = transformar_texto_em_classes(csv_file, coluna_texto, output_file)
