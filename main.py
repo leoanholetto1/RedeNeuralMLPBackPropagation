@@ -29,7 +29,7 @@ def calculaDerivada(net, funcao):
         return 1 / 10.0
     elif funcao == "Logistica":
         return calcula(net, funcao) * (1 - calcula(net, funcao))
-    else:  # Derivada da função hiperbólica tangente
+    else:
         return 1 - float(calcula(net, funcao))**2
 
 def prompt_continue_training(current_n):
@@ -55,13 +55,13 @@ def prompt_continue_training(current_n):
         result.extend(["continuar"])
         window.destroy()
 
-    window = tk.Toplevel()  # Use Toplevel para abrir uma nova janela em vez de Tk()
+    window = tk.Toplevel()
     window.title("Ação no Treinamento")
-    window.geometry("400x200")
+    window.geometry("500x300")
     window.config(bg="#f0f0f5")
     window.protocol("WM_DELETE_WINDOW", on_close)
 
-    tk.Label(window, text="O treinamento está em progresso.\nO que você gostaria de fazer?", font=("Arial", 12), bg="#f0f0f5", wraplength=350, pady=10).pack()
+    tk.Label(window, text="O que você gostaria de fazer?", font=("Arial", 12), bg="#f0f0f5", wraplength=350, pady=10).pack()
 
     button_frame = tk.Frame(window, bg="#f0f0f5")
     button_frame.pack(pady=10)
